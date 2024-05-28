@@ -39,14 +39,14 @@ contract MyGovernorTest is Test {
         governor = new MyGovernor(token, timelock);
         bytes32 proposerRole = timelock.PROPOSER_ROLE();
         bytes32 executorRole = timelock.EXECUTOR_ROLE();
-        bytes32 adminRole = timelock.TIMELOCK_ADMIN_ROLE();
+        bytes32 adminRole = timelock.DEFAULT_ADMIN_ROLE();
 
         timelock.grantRole(proposerRole, address(governor));
         timelock.grantRole(executorRole, address(0));
         timelock.revokeRole(adminRole, msg.sender);
 
         lox = new Lox();
-        box.transferOwnership(address(timelock));
+        lox.transferOwnership(address(timelock));
     }
 
     function testCantUpdateLoxWithoutGovernance() public {
